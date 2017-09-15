@@ -7,79 +7,79 @@
 	<packaging>maven-plugin</packaging>
 
 	<name>devtest-maven-plugin</name>
-   <description>Maven Plugin for CA DevTest</description>
+	<description>Maven Plugin for CA DevTest</description>
 
 	<!-- FIXME change it to the project's website -->
 	<url>http://maven.apache.org</url>
 
-   <licenses>
-      <license>
-         <name>The Apache License, Version 2.0</name>
-         <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      </license>
-   </licenses>
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
 
-   <developers>
-      <developer>
-         <name>Mike Gavaghan</name>
-         <email>mike@gavaghan.org</email>
-         <organization>Mike Gavaghan</organization>
-         <organizationUrl>http://www.gavaghan.org/</organizationUrl>
-      </developer>
-   </developers>
+	<developers>
+		<developer>
+			<name>Mike Gavaghan</name>
+			<email>mike@gavaghan.org</email>
+			<organization>Mike Gavaghan</organization>
+			<organizationUrl>http://www.gavaghan.org/</organizationUrl>
+		</developer>
+	</developers>
 
-   <scm>
-      <connection>scm:git:git://github.com/mgavaghan/devtest-maven-plugin.git</connection>
-      <developerConnection>scm:git:ssh://github.com:mgavaghan/devtest-maven-plugin.git</developerConnection>
-      <url>http://github.com/mgavaghan/devtest-maven-plugin/tree/master</url>
-   </scm>
+	<scm>
+		<connection>scm:git:git://github.com/mgavaghan/devtest-maven-plugin.git</connection>
+		<developerConnection>scm:git:ssh://github.com:mgavaghan/devtest-maven-plugin.git</developerConnection>
+		<url>http://github.com/mgavaghan/devtest-maven-plugin/tree/master</url>
+	</scm>
 
-   <properties>
-      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <maven.compiler.source>1.8</maven.compiler.source>
-      <maven.compiler.target>1.8</maven.compiler.target>
-      <additionalparam>-Xdoclint:none</additionalparam>
-   </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<additionalparam>-Xdoclint:none</additionalparam>
+	</properties>
 
-   <dependencies>
-      <!-- Plugin API -->
-      <dependency>
-         <groupId>org.apache.maven</groupId>
-         <artifactId>maven-plugin-api</artifactId>
-         <version>2.0</version>
-      </dependency>
-      <!-- Maven core -->
-      <dependency>
-         <groupId>org.apache.maven</groupId>
-         <artifactId>maven-core</artifactId>
-         <version>3.2.5</version>
-      </dependency>
-      <!-- Plugin descriptor -->
-      <dependency>
-         <groupId>org.apache.maven</groupId>
-         <artifactId>maven-plugin-descriptor</artifactId>
-         <version>2.2.1</version>
-      </dependency>
-      <!-- Annotation handler -->
-      <dependency>
-         <groupId>org.apache.maven.plugin-tools</groupId>
-         <artifactId>maven-plugin-annotations</artifactId>
-         <version>3.2</version>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.codehaus.plexus</groupId>
-         <artifactId>plexus-utils</artifactId>
-         <version>3.0.8</version>
-      </dependency>
-      <!-- JUnit -->
-      <dependency>
-         <groupId>junit</groupId>
-         <artifactId>junit</artifactId>
-         <version>4.8.2</version>
-         <scope>test</scope>
-      </dependency>
-   </dependencies>
+	<dependencies>
+		<!-- Plugin API -->
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<!-- Maven core -->
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-core</artifactId>
+			<version>3.2.5</version>
+		</dependency>
+		<!-- Plugin descriptor -->
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-descriptor</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+		<!-- Annotation handler -->
+		<dependency>
+			<groupId>org.apache.maven.plugin-tools</groupId>
+			<artifactId>maven-plugin-annotations</artifactId>
+			<version>3.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-utils</artifactId>
+			<version>3.0.8</version>
+		</dependency>
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
@@ -108,7 +108,7 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<profiles>
 		<profile>
 			<id>run-its</id>

@@ -2,7 +2,6 @@ package org.gavaghan.devtest.plugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,6 +10,7 @@ import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
@@ -20,10 +20,10 @@ import org.apache.maven.project.MavenProject;
  * 
  * @author <a href="mailto:mike@gavaghan.org">Mike Gavaghan</a>
  */
-@Mojo(name = "build-classpath")
+@Mojo(name = "build-classpath", defaultPhase = LifecyclePhase.INITIALIZE)
 public class ClasspathMojo extends AbstractMojo
 {
-	/** Path to DevTEst installation. */
+	/** Path to DevTest installation. */
 	@Parameter(alias = "devtest-home", required = true)
 	private File mDevTestHome;
 
@@ -36,11 +36,13 @@ public class ClasspathMojo extends AbstractMojo
 	{
 		getLog().info("Using DevTest home: " + mDevTestHome);
 		
+		maven.getCompileDependencies();
+		
 		try
 		{
 			for (String elem : maven.getCompileClasspathElements())
 			{
-				getLog().info("Source element: " + elem);
+				//getLog().info("Source element: " + elem);
 			}
 		}
 		catch (DependencyResolutionRequiredException exc)
@@ -62,7 +64,7 @@ public class ClasspathMojo extends AbstractMojo
 
 		// log settings from pom
 		logSettings(maven);
-
+		
 		try
 		{
 			// check for 'lib' directory
@@ -71,6 +73,7 @@ public class ClasspathMojo extends AbstractMojo
 			if (!lib.canRead()) throw new MojoFailureException(lib.getCanonicalPath() + " is not readable");
 
 			Set<Artifact> artifacts = maven.getArtifacts();
+			//artifacts = maven.getDependencyArtifacts();
 
 			findJars(lib, artifacts);
 			
@@ -100,6 +103,9 @@ public class ClasspathMojo extends AbstractMojo
 			{
 				getLog().info("Adding: " + file.getCanonicalPath());
 
+				DevTestArtifact artifact = new DevTestArtifact(file);
+				
+				artifacts.add(artifact);
 			}
 		}
 	}
