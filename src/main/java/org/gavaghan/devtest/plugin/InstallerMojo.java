@@ -1,12 +1,15 @@
 package org.gavaghan.devtest.plugin;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Map;
-import java.util.Set;
 
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.DependencyResolutionRequiredException;
+import org.apache.maven.model.Build;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -20,36 +23,22 @@ import org.apache.maven.project.MavenProject;
  * 
  * @author <a href="mailto:mike@gavaghan.org">Mike Gavaghan</a>
  */
-@Mojo(name = "build-classpath", defaultPhase = LifecyclePhase.INITIALIZE)
-public class ClasspathMojo extends AbstractMojo
+@Mojo(name = "copy-to-hotDeploy", defaultPhase = LifecyclePhase.INSTALL)
+public class InstallerMojo extends AbstractMojo
 {
+	/** Filename filter. */
+	static private FilenameFilter sJarFinder = new FilenameFilter()
+	{
+		@Override
+		public boolean accept(File dir, String name)
+		{
+			return name.toLowerCase().endsWith(".jar");
+		}
+	};
+
 	/** Path to DevTest installation. */
 	@Parameter(alias = "devtest-home", required = true)
 	private File mDevTestHome;
-
-	/**
-	 * Log runtime settings
-	 * 
-	 * @param maven
-	 */
-	private void logSettings(MavenProject maven)
-	{
-		getLog().info("Using DevTest home: " + mDevTestHome);
-		
-		maven.getCompileDependencies();
-		
-		try
-		{
-			for (String elem : maven.getCompileClasspathElements())
-			{
-				//getLog().info("Source element: " + elem);
-			}
-		}
-		catch (DependencyResolutionRequiredException exc)
-		{
-			// ignored
-		}
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -62,51 +51,49 @@ public class ClasspathMojo extends AbstractMojo
 		Map<?, ?> context = getPluginContext();
 		MavenProject maven = (MavenProject) context.get("project");
 
-		// log settings from pom
-		logSettings(maven);
-		
 		try
 		{
-			// check for 'lib' directory
-			File lib = new File(mDevTestHome, "lib");
-			if (!lib.exists()) throw new MojoFailureException(lib.getCanonicalPath() + " does not exist");
-			if (!lib.canRead()) throw new MojoFailureException(lib.getCanonicalPath() + " is not readable");
+			// check for 'hotDeploy' directory
+			File hotDeploy = new File(mDevTestHome, "hotDeploy");
+			if (!hotDeploy.exists()) throw new MojoFailureException(hotDeploy.getCanonicalPath() + " does not exist");
+			if (!hotDeploy.canWrite()) throw new MojoFailureException(hotDeploy.getCanonicalPath() + " is not writeable");
+			getLog().info("hotDeploy folder is: " + hotDeploy.getCanonicalPath());
 
-			Set<Artifact> artifacts = maven.getArtifacts();
-			//artifacts = maven.getDependencyArtifacts();
+			// find target
+			Build build = maven.getBuild();
+			File target = new File(build.getDirectory());
+			File[] artifactList = target.listFiles(sJarFinder);
 
-			findJars(lib, artifacts);
-			
-			logSettings(maven);
+			if ((artifactList == null) || (artifactList.length == 0)) throw new MojoFailureException("No artifact found in: " + hotDeploy.getCanonicalPath());
+
+			// copy artifact
+			byte[] buffer = new byte[65536];
+
+			for (File artifact : artifactList)
+			{
+				getLog().info("Installing artifact: " + artifact.getName());
+				
+				File dest = new File(hotDeploy, artifact.getName());
+				dest.delete(); // delete any existing file
+
+				try (InputStream input = new FileInputStream(artifact); OutputStream output = new FileOutputStream(dest))
+				{
+					int got;
+
+					for (;;)
+					{
+						got = input.read(buffer);
+						if (got < 0) break;
+						output.write(buffer, 0, got);
+					}
+					
+					output.flush();
+				}
+			}
 		}
 		catch (IOException exc)
 		{
-			throw new MojoExecutionException("Unable to add DevTest libraries to path", exc);
-		}
-	}
-
-	private void findJars(File root, Set<Artifact> artifacts) throws IOException
-	{
-		for (File file : root.listFiles())
-		{
-			// can't read it?  move on
-			if (!file.canRead())  continue;
-			
-			// if directory, dive
-			if (file.isDirectory())
-			{
-				findJars(file, artifacts);
-			}
-			
-			// else, if jar
-			else if (file.getName().toLowerCase().endsWith(".jar"))
-			{
-				getLog().info("Adding: " + file.getCanonicalPath());
-
-				DevTestArtifact artifact = new DevTestArtifact(file);
-				
-				artifacts.add(artifact);
-			}
+			throw new MojoExecutionException("Unable to install new DevTest artifact", exc);
 		}
 	}
 }
