@@ -34,7 +34,7 @@ Add this section to your `pom.xml`:
     		<plugin>
     			<groupId>org.gavaghan</groupId>
     			<artifactId>devtest-maven-plugin</artifactId>
-    			<version>0.5.0</version>
+    			<version>0.2.0</version>
     			<configuration>
     				<devtest-home>[fully qualified path to DevTest installation folder (not the hotDeploy folder]
     			</configuration>
