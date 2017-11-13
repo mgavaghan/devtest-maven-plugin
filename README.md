@@ -1,2 +1,51 @@
-# devtest-maven-plugin
-Maven plugin for CA DevTest extensions
+# devtest-maven-plugin  v0.5.0
+Maven plugin for custom CA DevTest extensions
+
+## Description ##
+This plugin defines a very simple goal: `copy-to-hotDeploy`
+
+This goal takes a successfully compiled target `jar` and copies it to the `hotDeploy` folder of a DevTest installation on the local machine during the `install` phase.
+
+## Repository ##
+This artifact is stored in a private repository.  Please add this to your `settings.xml` file:
+
+	<repositories>
+	   <repository>
+	      <id>private-devtest-repo</id>
+	      <name>Private DevTest Repository</name>
+	      <releases>
+	         <enabled>true</enabled>
+	         <updatePolicy>never</updatePolicy>
+	         <checksumPolicy>fail</checksumPolicy>
+	      </releases>
+	      <snapshots>
+	         <enabled>false</enabled>
+	      </snapshots>
+	      <url>http://sombrita.com:8080/maven2</url>
+	      <layout>default</layout>
+	   </repository>
+	</repositories>
+
+## Usage ##
+Add this section to your `pom.xml`:
+
+    <build>
+    	<plugins>
+    		<plugin>
+    			<groupId>org.gavaghan</groupId>
+    			<artifactId>devtest-maven-plugin</artifactId>
+    			<version>0.5.0</version>
+    			<configuration>
+    				<devtest-home>[fully qualified path to DevTest installation folder (not the hotDeploy folder]
+    			</configuration>
+    			<executions>
+    				<execution>
+    					<goals>
+    						<goal>copy-to-hotDeploy</goal>
+    					</goals>
+    				</execution>
+    			</executions>
+    		</plugin>
+    	</plugins>
+    </build>
+    
