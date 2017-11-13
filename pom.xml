@@ -3,7 +3,7 @@
 
 	<groupId>org.gavaghan</groupId>
 	<artifactId>devtest-maven-plugin</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.2.0</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>devtest-maven-plugin</name>
@@ -71,13 +71,6 @@
 			<groupId>org.codehaus.plexus</groupId>
 			<artifactId>plexus-utils</artifactId>
 			<version>3.0.8</version>
-		</dependency>
-		<!-- JUnit -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
