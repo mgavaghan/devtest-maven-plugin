@@ -84,6 +84,7 @@
 					<goalPrefix>devtest</goalPrefix>
 					<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
 				</configuration>
+				<!-- 
 				<executions>
 					<execution>
 						<id>mojo-descriptor</id>
@@ -98,6 +99,7 @@
 						</goals>
 					</execution>
 				</executions>
+				-->
 			</plugin>
 		</plugins>
 	</build>
