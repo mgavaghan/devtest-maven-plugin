@@ -52,7 +52,7 @@ Add this section to your `pom.xml`:
        </plugins>
     </build>
     
-Execute this command to build your custom extension:
+Execute this command to build your custom extension and copy it to `[DevTestHome]/hotDeploy`:
 
 
     mvn clean install
