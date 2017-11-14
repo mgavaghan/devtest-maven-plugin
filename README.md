@@ -1,6 +1,8 @@
 # devtest-maven-plugin  v0.2.0
 Maven plugin for custom CA DevTest extensions
 
+**Author:** Mike Gavaghan - **Email:** mike@gavaghan.org
+
 ## Description ##
 This plugin defines a very simple goal: `copy-to-hotDeploy`
 
@@ -50,3 +52,8 @@ Add this section to your `pom.xml`:
        </plugins>
     </build>
     
+Execute this command to build your custom extension:
+
+
+    mvn clean install
+
