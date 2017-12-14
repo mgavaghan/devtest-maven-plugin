@@ -19,12 +19,12 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 /**
- * Mojo to generate source code from Thrift IDL files.
+ * Mojo to copy a DevTest SDK jar to the hotDeploy folder.
  * 
  * @author <a href="mailto:mike@gavaghan.org">Mike Gavaghan</a>
  */
 @Mojo(name = "copy-to-hotDeploy", defaultPhase = LifecyclePhase.INSTALL)
-public class InstallerMojo extends AbstractMojo
+public class HotDeployMojo extends AbstractMojo
 {
 	/** Filename filter. */
 	static private FilenameFilter sJarFinder = new FilenameFilter()
