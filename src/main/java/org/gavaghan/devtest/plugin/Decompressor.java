@@ -56,8 +56,9 @@ class Decompressor implements Runnable
 			while ((srcEntry = zis.getNextEntry()) != null)
 			{
 				// don't copy the activemq stuff
-				if (srcEntry.getName().startsWith("META-INF/") && (srcEntry.getName().indexOf("activemq") < 0)) continue;
 				String name = srcEntry.getName();
+				if (name.startsWith("META-INF/") && (name.indexOf("activemq") < 0)) continue;
+				if (name.startsWith("license/")) continue;
 
 				// avoid duplicates
 				if (created.containsKey(name)) continue;

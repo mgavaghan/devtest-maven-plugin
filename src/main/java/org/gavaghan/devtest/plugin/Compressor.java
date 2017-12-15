@@ -53,8 +53,21 @@ class Compressor implements Runnable
 				byte[] data = dataAry[0];
 
 				zos.putNextEntry(entry);
+				
+				//mLog.warn(entry.getName());
 
-				if (data != null) zos.write(data);
+				// (data != null) zos.write(data);
+				if (data != null)
+				{
+					File newFile = new File("C:/Users/gavmi01/Documents/GIT/devtest-jar-builder/target/classes/" + entry.getName());
+					newFile.getParentFile().mkdirs();
+					
+					try (FileOutputStream classOS = new FileOutputStream(newFile))
+					{
+						classOS.write(data);
+						classOS.flush();
+					}
+				}
 
 				zos.closeEntry();
 			}
