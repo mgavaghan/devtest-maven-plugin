@@ -74,7 +74,7 @@ This should do the trick:
       </plugins>
     </build>
 
-A complete `pom.xml` can also be found in the `devtest-jar-builder` project.
+A complete `pom.xml` can also be found in the [devtest-jar-builder](https://github.com/mgavaghan/devtest-jar-builder "DevTest JAR Builder") project.
 
 Execute this command to install the DevTest master jar artifact in your local repository (this will take several minutes to complete.
 
