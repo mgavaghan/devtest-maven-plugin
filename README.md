@@ -10,12 +10,17 @@ It has currently been validated against the following DevTest versions:
 
 - DevTest 10.1
 - DevTest 10.2
-`
+
+## Summary ##
+
+- `create-master-jar` - create a single jar of all DevTest SDK depenencies
+- `copy-to-hotDeploy` - copy a compiled extension to hotDeploy
+
 
 ## Goal: `create-master-jar` ##
 One of the challenges building a custom extension using the DevTest SDK is determining all of the appropriate dependencies to including in your build path.  Not only must you include the DevTest-specific jars, you must also reference the proper version of various open source libraries that DevTest relies upon.
 
-This Maven goal allows you to point to a DevTest installation folder and collapse all of the dozens of jars in the `lib` folder into a single, master DevTest jar that you can use during compilation.  You would only need to add this dependency to the `pom.xml` of your extension project:
+This Maven goal allows you to point to a DevTest installation folder and collate all of the dozens of jars in the `lib` folder into a single, master DevTest jar that you can use during compilation.  You would only need to add this dependency to the `pom.xml` of your extension project:
 
 	<dependency>
 		<groupId>com.ca</groupId>
@@ -29,15 +34,15 @@ You should only need to execute the installation of the DevTest master jar once 
 This should do the trick:
 
 
-	<groupId>com.ca</groupId>
-	<artifactId>devtest</artifactId>
-   <!--
+    <groupId>com.ca</groupId>
+    <artifactId>devtest</artifactId>
+    <!-- 
       TODO Replace with the version of DevTest found in 'devtest-home'.
       This will determine the verion of the artifact stored in the local
       repository
-   -->         
-	<version>10.2</version>
-	<packaging>jar</packaging>
+    -->         
+    <version>10.2</version>
+    <packaging>jar</packaging>
 
     <build>
       <plugins>
