@@ -43,7 +43,7 @@ public class CreateMasterDevTestJarMojo extends AbstractMojo
 
 		File target = new File(build.getDirectory());
 		File dest = new File(target, "classes");
-		getLog().debug("Collator DevTest jar contents to: " + dest.getAbsolutePath());
+		getLog().debug("Collate DevTest jar contents to: " + dest.getAbsolutePath());
 
 		// build a decompressor to dive through the DevTest jars
 		Decompressor decomp = new Decompressor(new File(mDevTestHome, "lib"), getLog());
